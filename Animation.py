@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import matplotlib.colors as col
+import re
 
-with open("Piskel.c") as f:
+with open("Piskel1.c") as f:
     data = f.readlines()
     # data = list strings with each string being the corresponding line of the file
 
@@ -18,9 +19,14 @@ def read(file):
     for row in range(11, 10+height):
         row = file[row].split() #row = [list of items separated by commas in a given row]
         for entry in range(0,width):
-            row[entry] = row[entry].lstrip("0")
-            row[entry] = row[entry].replace("x", "#")
-            row[entry] = row[entry].replace(",", "")
+            row[entry] = row[entry].replace(",", "") #gives wanted colour in format [ff bb gg rr] want [rr gg bb]
+
+            red = row[entry][8:]
+            green = row[entry][6:8]
+            blue = row[entry][4:6]
+
+            row[entry] = "#" + red + green + blue
+
         grid.append(row)
 
     return grid
@@ -37,10 +43,15 @@ def rgb(grid):
 
     return rgb_grid
 
-
 def animate(image):
     grid = read(file = image)
+    print(grid)
     rgb_grid = rgb(grid)
+    #rgb_grid[0][0] = (1,0,0)
+    #rgb_grid[0][1] = (0,1,0)
+    #rgb_grid[1][0] = (0,0,1)
+    #rgb_grid[1][1] = (0,0,0)
+    #print(rgb_grid)
 
     plt.style.use('_mpl-gallery-nogrid')
     fig, ax = plt.subplots(figsize = (5,5))
