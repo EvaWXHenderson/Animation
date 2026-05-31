@@ -1,19 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.colors as col
-import re
 
-with open("Piskel1.c") as f:
-    data = f.readlines()
-    # data = list strings with each string being the corresponding line of the file
-
-#Colours in RBGA
-
-#Width = line 4 - 32 characters + width
-width = int(data[3][-3] + data[3][-2])
-#Height = line 5 - 33 characters + height
-height = int(data[4][-3] + data[4][-2])
-
-def read(image):
+def read(image, height, width):
     grid = []
 
     for row in range(11, 10+height):
@@ -46,8 +34,11 @@ def rgb(grid):
 def animate(file):
     with open(file) as f:
         data = f.readlines()
+
+    width_ = int(data[3][-3] + data[3][-2])
+    height_ = int(data[4][-3] + data[4][-2])
     
-    grid = read(image = data)
+    grid = read(image = data, height=height_, width=width_)
     rgb_grid = rgb(grid)
 
     plt.style.use('_mpl-gallery-nogrid')
@@ -56,7 +47,7 @@ def animate(file):
 
     plt.xticks([]) 
     plt.yticks([])
-    
+
     plt.show()
 
 animate(file = "Piskel3.c")
