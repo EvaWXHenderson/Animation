@@ -13,13 +13,13 @@ width = int(data[3][-3] + data[3][-2])
 #Height = line 5 - 33 characters + height
 height = int(data[4][-3] + data[4][-2])
 
-def read(file):
+def read(image):
     grid = []
 
     for row in range(11, 10+height):
-        row = file[row].split() #row = [list of items separated by commas in a given row]
+        row = image[row].split()
         for entry in range(0,width):
-            row[entry] = row[entry].replace(",", "") #gives wanted colour in format [ff bb gg rr] want [rr gg bb]
+            row[entry] = row[entry].replace(",", "")
 
             red = row[entry][8:]
             green = row[entry][6:8]
@@ -43,19 +43,20 @@ def rgb(grid):
 
     return rgb_grid
 
-def animate(image):
-    grid = read(file = image)
-    print(grid)
+def animate(file):
+    with open(file) as f:
+        data = f.readlines()
+    
+    grid = read(image = data)
     rgb_grid = rgb(grid)
-    #rgb_grid[0][0] = (1,0,0)
-    #rgb_grid[0][1] = (0,1,0)
-    #rgb_grid[1][0] = (0,0,1)
-    #rgb_grid[1][1] = (0,0,0)
-    #print(rgb_grid)
 
     plt.style.use('_mpl-gallery-nogrid')
     fig, ax = plt.subplots(figsize = (5,5))
     ax.imshow(rgb_grid)
+
+    plt.xticks([]) 
+    plt.yticks([])
+    
     plt.show()
 
-animate(image = data)
+animate(file = "Piskel3.c")
