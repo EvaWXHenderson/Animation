@@ -41,6 +41,8 @@ def animate(file):
     grid = read(image = data, height=height_, width=width_)
     rgb_grid = rgb(grid)
 
+    plt.ion()
+
     plt.style.use('_mpl-gallery-nogrid')
     fig, ax = plt.subplots(figsize = (5,5))
     ax.imshow(rgb_grid)
@@ -50,4 +52,10 @@ def animate(file):
 
     plt.show()
 
-animate(file = "Piskel3.c")
+def close(image, command):
+    input(command)
+    plt.close(image)
+
+
+image = animate(file = "Piskel3.c")
+close(image, "press enter to close window")
